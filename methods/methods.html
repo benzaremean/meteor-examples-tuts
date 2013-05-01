@@ -1,0 +1,15 @@
+<head>
+  <title>methods</title>
+</head>
+
+<body>
+  {{> list}}
+</body>
+
+<template name="list">
+  <ul>
+	{{#each items}}
+		<li>{{text}}</li>
+	{{/each}}
+  </ul>
+</template>
