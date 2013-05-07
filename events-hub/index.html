@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	{{> global-nav}}
+	{{> globalNav}}
 	<div class="container">  
   		{{> content}}
 	  <footer>
@@ -25,10 +25,10 @@
 </body>
 
 <template name="content">
-  {{> new-form }}
+  {{> newForm }}
 </template>
 
-<template name="global-nav">
+<template name="globalNav">
   <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -40,11 +40,11 @@
           <a class="brand" href="/">Events Hub</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="/venues">Venues</a></li>
-              <li><a href="/services">Services</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-              <li><a href="/new">New</a></li>
+              <li class="active"><a id="venues">Venues</a></li>
+              <li><a id="services">Services</a></li>
+              <li><a id="about">About</a></li>
+              <li><a id="contact-us">Contact Us</a></li>
+              <li><a id="new">New</a></li>
             </ul>
             {{loginButtons}}              
         </div>

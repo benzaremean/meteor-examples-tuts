@@ -1,7 +1,8 @@
-<template name="new-form">
+<template name="newForm">
 	<div class="row">
 		<div class="span9">
 		  <form action="/venues/new" method="POST" id="new-venue-form" class="form-horizontal" enctype="multipart/form-data" data-validate="parsley">
+		    
 		    <fieldset>
 		      <legend>About venue</legend>
 		      <div class="control-group">
@@ -13,7 +14,7 @@
 		      <div class="control-group ">
 		        <label class="control-label" for="about">Short description</label>
 		        <div class="controls">
-		          <textarea id="about" name="about" cols="50" class="input-xxlarge" rows="5" data-required="true"></textarea>
+		          <textarea id="about" name="about" cols="50" class="input-xxlarge" rows="10" data-required="true"></textarea>
 		          <p class="help-inline"></p>
 		        </div>
 		      </div>
@@ -22,27 +23,27 @@
 		    <fieldset>
 		      <legend>Address</legend>
 		      <div class="control-group">
-		        <label class="control-label" for="address_line1">Address Line 1</label>
+		        <label class="control-label" for="address-line1">Address Line 1</label>
 		        <div class="controls">
-		          <input type="text" id="address_line1" name="address.line1" value="" class="input-xlarge" placeholder="12 Somplace Street" data-required="true">
+		          <input type="text" id="address-line1" name="address-line1" value="" class="input-xlarge" placeholder="12 Somplace Street" data-required="true">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="address_line2">Address Line 2</label>
+		        <label class="control-label" for="address-line2">Address Line 2</label>
 		        <div class="controls">
-		          <input type="text" id="address_line2" name="address.line2" value="" class="input-xlarge">
+		          <input type="text" id="address-line2" name="address-line2" value="" class="input-xlarge">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="address_postCode">Post Code</label>
+		        <label class="control-label" for="address-postCode">Post Code</label>
 		        <div class="controls">
-		          <input type="text" id="address_postCode" name="address.postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
+		          <input type="text" id="address_-ostCode" name="address-postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="address_town">Town</label>
+		        <label class="control-label" for="address-town">Town</label>
 		        <div class="controls">
-		          <input type="text" id="address_town" name="address.town" value="" class="input-xlarge" placeholder="London" data-required="true">
+		          <input type="text" id="address-town" name="address-town" value="" class="input-xlarge" placeholder="London" data-required="true">
 		        </div>
 		      </div>
 		    </fieldset>
@@ -50,62 +51,62 @@
 		    <fieldset>
 		      <legend>Rooms</legend>
 		      <div class="control-group">
-		        <label class="control-label" for="rooms_0__name">Room</label>
+		        <label class="control-label" for="rooms-name-0">Room</label>
 		        <div class="controls">
-		          <input type="text" id="rooms_0__name" name="rooms[0].name" value="" class="input-xlarge">
+		          <input type="text" id="rooms-name-0" name="rooms-name-0" value="" class="input-xlarge">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="rooms_0__description">Short description</label>
+		        <label class="control-label" for="rooms-description-0">Short description</label>
 		        <div class="controls">
-		          <textarea id="rooms_0__description" name="rooms[0].description" cols="50" class="input-xxlarge" rows="5"></textarea>
+		          <textarea id="rooms-description-0" name="rooms-description-0" cols="50" class="input-xxlarge" rows="5"></textarea>
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="rooms_0__maxCapacityTheatre">Max Capacity Threatre</label>
+		        <label class="control-label" for="rooms-maxCapacityTheatre-0">Max Capacity Threatre</label>
 		        <div class="controls">
-		          <input type="text" id="rooms_0__maxCapacityTheatre" name="rooms[0].maxCapacityTheatre" value="" class="input-mini" placeholder="e.g. 300" data-type="digits">
+		          <input type="text" id="rooms-maxCapacityTheatre-0" name="rooms-maxCapacityTheatre-0" value="" class="input-small" placeholder="e.g. 300" data-type="digits">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="rooms_0__maxCapacityBanquet">Max Capacity Banquet</label>
+		        <label class="control-label" for="rooms-maxCapacityBanquet-0">Max Capacity Banquet</label>
 		        <div class="controls">
-		          <input type="text" id="rooms_0__maxCapacityBanquet" name="rooms[0].maxCapacityBanquet" value="" class="input-mini" data-type="digits">
+		          <input type="text" id="rooms-maxCapacityBanquet-0" name="rooms-maxCapacityBanquet-0" value="" class="input-small" data-type="digits">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="rooms_0__dimensions">Dimensions</label>
+		        <label class="control-label" for="rooms-dimensions-0">Dimensions</label>
 		        <div class="controls">
-		          <input type="text" id="rooms_0__dimensions" name="rooms[0].dimensions" value="" class="input-mini" placeholder="12m x 9m">
+		          <input type="text" id="rooms-dimensions-0" name="rooms-dimensions-0" value="" class="input-small" placeholder="12m x 9m">
 		        </div>
 		      </div>
-		      <a class="btn btn-small" href="#"><i class="icon-plus"></i> Add Another Room</a>
+		      <!--a class="btn btn-small" href="#"><i class="icon-plus"></i> Add Another Room</a-->
 		    </fieldset>
 
 		    <fieldset>
 		      <legend>Contact Details</legend>
 		      <div class="control-group">
-		        <label class="control-label" for="contact_contactName">Contact Name</label>
+		        <label class="control-label" for="contact-contactName">Contact Name</label>
 		        <div class="controls">
-		          <input type="text" id="contact_contactName" name="contact.contactName" value="" class="input-xlarge" data-required="true">
+		          <input type="text" id="contact-contactName" name="contact-contactName" value="" class="input-xlarge" data-required="true">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="contact_email">Email</label>
+		        <label class="control-label" for="contact-email">Email</label>
 		        <div class="controls">
-		          <input type="text" id="contact_email" name="contact.email" value="" class="input-xlarge" data-required="true" data-type="email">
+		          <input type="text" id="contact-email" name="contact-email" value="" class="input-xlarge" data-required="true" data-type="email">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="contact_telephone">Telephone</label>
+		        <label class="control-label" for="contact-telephone">Telephone</label>
 		        <div class="controls">
-		          <input type="text" id="contact_telephone" name="contact.telephone" value="" class="input-xlarge" data-required="true" data-type="digits">
+		          <input type="text" id="contact-telephone" name="contact-telephone" value="" class="input-xlarge" data-required="true" data-type="digits">
 		        </div>
 		      </div>
 		      <div class="control-group">
-		        <label class="control-label" for="contact_website">Website</label>
+		        <label class="control-label" for="contact-website">Website</label>
 		        <div class="controls">
-		          <input type="text" id="contact_website" name="contact.website" value="" class="input-xlarge" data-required="true">
+		          <input type="text" id="contact-website" name="contact-website" value="" class="input-xlarge" data-required="true">
 		        </div>
 		      </div>
 		    </fieldset>
@@ -128,11 +129,14 @@
 		        </div>
 		      </div>
 		    </fieldset>
-		    
 		    <div class="form-actions">
+  				<button type="submit" class="btn btn-primary">Create</button>
+  				<a href="/" type="button" class="btn">Cancel</a>
+			</div>
+		    <!--div class="form-actions">
 		      <input type="submit" value="Create">
 		      <a href="/" class="btn">Cancel</a>
-		    </div>
+		    </div-->
 		  </form>
 		</div>	
 	</div>
