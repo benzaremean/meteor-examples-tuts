@@ -12,6 +12,7 @@ EventsRouter = Backbone.Router.extend
 	},
 	main: () ->
 		console.log "at home bitches"
+		Session.set 'currentView', 'home'
 	getVenues: () -> 
 		console.log "hey we want some pussy"
 		Session.set 'currentView', 'venues'
@@ -22,10 +23,10 @@ EventsRouter = Backbone.Router.extend
 		Session.set 'currentView', 'venue'
 	showServices: () -> 
 		console.log "hey we really really want some pussy..... service us"
-		Session.set 'currentView', 'Services'
+		Session.set 'currentView', 'services'
 	showAbout: () -> 
 		console.log "hey we really really want some pussy about"
-		Session.set 'currentView', 'About'
+		Session.set 'currentView', 'about'
 	showContactUs: () -> 
 		console.log "hey we really really want some pussy  so contact us"
 		Session.set 'currentView', 'contactUs'

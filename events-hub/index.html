@@ -25,7 +25,45 @@
 </body>
 
 <template name="content">
-  {{> newForm }}
+  {{#if showHome}}
+    {{> home}}
+  {{/if}}
+
+  {{#if showNewForm}}
+    {{> newForm }}
+  {{/if}}  
+
+  {{#if showGetVenues}}
+    {{> venues}}  
+  {{/if}}
+
+  {{#if showAbout}}
+    {{> about}}
+  {{/if}}
+
+  {{#if showContactUs}}
+    {{> contactUs}}
+  {{/if}}
+
+  {{#if showServices}}
+    {{> services}}  
+  {{/if}}
+</template>
+
+<template name="about">
+  <p>We are a......</p>
+</template>
+
+<template name="home">
+  <p>Honey, Im home</p>
+</template>
+
+<template name="services">
+  <p>Post an Ad</p>
+</template>
+
+<template name="contactUs">
+  <p>contact us</p>
 </template>
 
 <template name="globalNav">

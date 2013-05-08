@@ -6,3 +6,23 @@ Template.globalNav.events
 	'click a#services': () -> Backbone.history.navigate 'services', true
 	'click a#about': () -> Backbone.history.navigate 'about', true
 	'click a#contact-us': () -> Backbone.history.navigate 'contact-us', true
+
+
+Template.content.showHome = ->
+	ifViewing 'home'
+
+Template.content.showNewForm = ->
+	ifViewing 'newVenueForm'
+
+Template.content.showGetVenues = ->
+	ifViewing 'venues'
+
+Template.content.showAbout = ->
+	ifViewing 'about'
+
+Template.content.showContactUs = ->
+	ifViewing 'contactUs'
+
+Template.content.showServices = ->
+	ifViewing 'services'
+
