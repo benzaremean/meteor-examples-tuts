@@ -26,3 +26,59 @@ Template.content.showContactUs = ->
 Template.content.showServices = ->
 	ifViewing 'services'
 
+Template.newForm.events
+	'submit form': (e, t) ->
+		e.preventDefault()
+		#Meteor.call "geoCode", "NW11QE", (err, results) ->
+		#	console.log err
+
+		if $( 'form' ).parsley( 'validate' )
+			name = $.trim(t.find("#name").value)
+			about = $.trim(t.find("#about").value)
+
+			address = { 
+				line1: $.trim(t.find("#address-line1").value)
+				line2: $.trim(t.find("#address-line2").value)
+				postcode: $.trim(t.find("#address-postCode").value)
+				town: $.trim(t.find("#address-town").value)
+			}
+
+			rooms = []
+			capacity = {
+				standing: $.trim(t.find("#rooms-maxCapacityStanding-0").value)
+				theatre: $.trim(t.find("#rooms-maxCapacityTheatre-0").value)
+				banquet: $.trim(t.find("#rooms-maxCapacityBanquet-0").value)
+				dimensions: $.trim(t.find("#rooms-dimensions-0").value)
+			}
+			room = {
+				roomname: $.trim(t.find("#rooms-name-0").value)
+				description: $.trim(t.find("#rooms-description-0").value)
+				capacity: capacity
+			}
+			rooms.push room
+
+			contact = {
+				name: $.trim(t.find("#contact-contactName").value)
+				email: $.trim(t.find("#contact-email").value)
+				telephone: $.trim(t.find("#contact-telephone").value)
+				website: $.trim(t.find("#contact-website").value)
+			}			
+			
+			console.log name
+
+			Meteor.call "post",
+				name
+				about
+				address
+				rooms
+				contact
+				(err, id) -> console.log id
+
+
+
+
+
+
+
+
+

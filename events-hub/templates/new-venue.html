@@ -1,14 +1,14 @@
 <template name="newForm">
 	<div class="row">
 		<div class="span9">
-		  <form action="/venues/new" method="POST" id="new-venue-form" class="form-horizontal" enctype="multipart/form-data" data-validate="parsley">
+		  <form action="/venues/new" method="POST" id="new-venue-form" class="form-horizontal" enctype="multipart/form-data">
 		    
 		    <fieldset>
 		      <legend>About venue</legend>
 		      <div class="control-group">
 		        <label class="control-label" for="name">Venue name</label>
 		        <div class="controls">
-		          <input type="text" id="name" name="name" value="" class="input-xlarge" data-required="true">
+		          <input type="text" id="name" name="name" value="" class="input-xxlarge" data-required="true">
 		        </div>
 		      </div>
 		      <div class="control-group ">
@@ -37,7 +37,7 @@
 		      <div class="control-group">
 		        <label class="control-label" for="address-postCode">Post Code</label>
 		        <div class="controls">
-		          <input type="text" id="address_-ostCode" name="address-postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
+		          <input type="text" id="address-postCode" name="address-postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
 		        </div>
 		      </div>
 		      <div class="control-group">
@@ -53,34 +53,40 @@
 		      <div class="control-group">
 		        <label class="control-label" for="rooms-name-0">Room</label>
 		        <div class="controls">
-		          <input type="text" id="rooms-name-0" name="rooms-name-0" value="" class="input-xlarge">
+		          <input type="text" id="rooms-name-0" name="rooms-name-0" value="" class="input-xxlarge">
 		        </div>
 		      </div>
 		      <div class="control-group">
 		        <label class="control-label" for="rooms-description-0">Short description</label>
 		        <div class="controls">
-		          <textarea id="rooms-description-0" name="rooms-description-0" cols="50" class="input-xxlarge" rows="5"></textarea>
+		          <textarea id="rooms-description-0" name="rooms-description-0" cols="50" class="input-xxlarge" rows="10"></textarea>
+		        </div>
+		      </div>
+		      <div class="control-group">
+		        <label class="control-label" for="rooms-maxCapacityStanding-0">Max Capacity Standing</label>
+		        <div class="controls">
+		          <input type="text" id="rooms-maxCapacityStanding-0" name="rooms-maxCapacityStanding-0" value="" class="input-mini" placeholder="e.g. 300" data-type="digits">
 		        </div>
 		      </div>
 		      <div class="control-group">
 		        <label class="control-label" for="rooms-maxCapacityTheatre-0">Max Capacity Threatre</label>
 		        <div class="controls">
-		          <input type="text" id="rooms-maxCapacityTheatre-0" name="rooms-maxCapacityTheatre-0" value="" class="input-small" placeholder="e.g. 300" data-type="digits">
+		          <input type="text" id="rooms-maxCapacityTheatre-0" name="rooms-maxCapacityTheatre-0" value="" class="input-mini" data-type="digits">
 		        </div>
 		      </div>
 		      <div class="control-group">
 		        <label class="control-label" for="rooms-maxCapacityBanquet-0">Max Capacity Banquet</label>
 		        <div class="controls">
-		          <input type="text" id="rooms-maxCapacityBanquet-0" name="rooms-maxCapacityBanquet-0" value="" class="input-small" data-type="digits">
+		          <input type="text" id="rooms-maxCapacityBanquet-0" name="rooms-maxCapacityBanquet-0" value="" class="input-mini" data-type="digits">
 		        </div>
-		      </div>
+		      </div>		      
 		      <div class="control-group">
-		        <label class="control-label" for="rooms-dimensions-0">Dimensions</label>
+		        <label class="control-label" for="rooms-dimensions-0">Dimensions (* sq foot)</label>
 		        <div class="controls">
-		          <input type="text" id="rooms-dimensions-0" name="rooms-dimensions-0" value="" class="input-small" placeholder="12m x 9m">
+		          <input type="text" id="rooms-dimensions-0" name="rooms-dimensions-0" value="" class="input-mini" placeholder="e.g 3000">
 		        </div>
 		      </div>
-		      <!--a class="btn btn-small" href="#"><i class="icon-plus"></i> Add Another Room</a-->
+		      <!a class="btn btn-small" href="#"><i class="icon-plus"></i> Add Another Room</a>
 		    </fieldset>
 
 		    <fieldset>
@@ -133,10 +139,6 @@
   				<button type="submit" class="btn btn-primary">Create</button>
   				<a href="/" type="button" class="btn">Cancel</a>
 			</div>
-		    <!--div class="form-actions">
-		      <input type="submit" value="Create">
-		      <a href="/" class="btn">Cancel</a>
-		    </div-->
 		  </form>
 		</div>	
 	</div>
