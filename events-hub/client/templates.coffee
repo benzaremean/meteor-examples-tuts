@@ -29,18 +29,34 @@ Template.content.showServices = ->
 Template.newForm.events
 	'submit form': (e, t) ->
 		e.preventDefault()
-		#Meteor.call "geoCode", "NW11QE", (err, results) ->
-		#	console.log err
+
+		addressl1 = $.trim(t.find("#address-line1").value)
+		addressl2 = $.trim(t.find("#address-line2").value)
+		addresspc = $.trim(t.find("#address-postCode").value)
+		addresstwn = $.trim(t.find("#address-town").value)
+
+		concatAddress = "#{addressl1} #{addressl2} #{addresspc} #{addresstwn}".split(' ').join('+')
+
+		#console.log concatAddress
+
+		Meteor.call "geoCode", concatAddress, (err, results) ->
+			#console.log results[0].lng, results[0].lat
+			Session.set('lat', results[0].lat)
+			Session.set('lng', results[0].lng)
+		
+		#console.log 'ffssaafaasfs', Session.get('lng'), Session.get('lat')
 
 		if $( 'form' ).parsley( 'validate' )
 			name = $.trim(t.find("#name").value)
 			about = $.trim(t.find("#about").value)
 
 			address = { 
-				line1: $.trim(t.find("#address-line1").value)
-				line2: $.trim(t.find("#address-line2").value)
-				postcode: $.trim(t.find("#address-postCode").value)
-				town: $.trim(t.find("#address-town").value)
+				line1: addressl1
+				line2: addressl2
+				postcode: addresspc
+				town: addresstwn
+				long: Session.get('lng')
+				lat: Session.get('lat')
 			}
 
 			rooms = []
@@ -66,7 +82,7 @@ Template.newForm.events
 			
 			console.log name
 
-			Meteor.call "post",
+			Meteor.call "createVenue",
 				name
 				about
 				address
