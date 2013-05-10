@@ -39,7 +39,7 @@ Template.map.rendered = ()->
 	lng = Session.get('lng')
 	map = L.map("map").setView([lat, lng], 14)
 
-	L.Icon.Default.imagePath = 'public/images'
+	L.Icon.Default.imagePath = 'http://leafletjs.com/dist/images'
 
 	L.tileLayer(cloudMade,
 	  attribution: attribution
