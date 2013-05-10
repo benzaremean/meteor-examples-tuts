@@ -29,4 +29,9 @@ EventsRouter = Backbone.Router.extend
 Meteor.startup () ->
 	new EventsRouter
 	Backbone.history.start pushState: true
+
+
+
+
+
 	

@@ -46,6 +46,14 @@
 		          <input type="text" id="address-town" name="address-town" value="" class="input-xlarge" placeholder="London" data-required="true">
 		        </div>
 		      </div>
+		      <div class="control-group">
+		      	<div class="controls">
+		      		<button id="validate-address" type="button" class="btn btn-small btn-danger">Validate Address</button>
+		      	</div>
+		      </div>
+		      {{#if showMap}}
+		      	{{> map}}
+  			  {{/if}}
 		    </fieldset>
 
 		    <fieldset>
@@ -142,4 +150,15 @@
 		  </form>
 		</div>	
 	</div>
+</template>
+
+<template name="map">
+	{{#constant}}
+	<div class="control-group">
+		<div class="controls">
+			<div id="map">
+			</div>
+		</div>
+	</div>
+	{{/constant}}
 </template>

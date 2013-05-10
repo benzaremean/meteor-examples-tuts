@@ -1,4 +1,5 @@
 ifViewing = (viewName) -> Session.get('currentView') is viewName
+showMap = ()-> Session.get('showMap')
 
 Template.globalNav.events
 	'click a#new': () -> Backbone.history.navigate 'venues/new', true
@@ -26,7 +27,44 @@ Template.content.showContactUs = ->
 Template.content.showServices = ->
 	ifViewing 'services'
 
+Template.newForm.showMap = ->
+	showMap()
+
+Template.map.rendered = ()->
+	apiKey = "66fbb0e43eb647e7aa930936d2dce669"
+	attribution = "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://cloudmade.com\">CloudMade</a>"
+	openStreetMap = "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+	cloudMade = "http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png"
+	lat = Session.get('lat')
+	lng = Session.get('lng')
+	map = L.map("map").setView([lat, lng], 14)
+
+	L.Icon.Default.imagePath = 'public/images'
+
+	L.tileLayer(cloudMade,
+	  attribution: attribution
+	  key: apiKey
+	  styleId: 1714
+	  maxZoom: 18
+	).addTo map
+	marker = L.marker([lat, lng]).addTo(map);
+
 Template.newForm.events
+	'click #validate-address': (e, t) ->
+		addressl1 = $.trim(t.find("#address-line1").value)
+		addressl2 = $.trim(t.find("#address-line2").value)
+		addresspc = $.trim(t.find("#address-postCode").value)
+		addresstwn = $.trim(t.find("#address-town").value)
+
+		concatAddress = "#{addressl1} #{addressl2} #{addresspc} #{addresstwn}".split(' ').join('+')
+		Meteor.call "geoCode", concatAddress, (err, results) ->
+			if results.length				
+				Session.set('lat', results[0].lat)
+				Session.set('lng', results[0].lng)
+				Session.set('showMap', true)
+			else
+				alert "are you sure you have entered address correctly? please have a look and try again"
+	
 	'submit form': (e, t) ->
 		e.preventDefault()
 
@@ -34,17 +72,6 @@ Template.newForm.events
 		addressl2 = $.trim(t.find("#address-line2").value)
 		addresspc = $.trim(t.find("#address-postCode").value)
 		addresstwn = $.trim(t.find("#address-town").value)
-
-		concatAddress = "#{addressl1} #{addressl2} #{addresspc} #{addresstwn}".split(' ').join('+')
-
-		#console.log concatAddress
-
-		Meteor.call "geoCode", concatAddress, (err, results) ->
-			#console.log results[0].lng, results[0].lat
-			Session.set('lat', results[0].lat)
-			Session.set('lng', results[0].lng)
-		
-		#console.log 'ffssaafaasfs', Session.get('lng'), Session.get('lat')
 
 		if $( 'form' ).parsley( 'validate' )
 			name = $.trim(t.find("#name").value)
