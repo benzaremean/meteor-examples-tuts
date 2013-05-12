@@ -4,134 +4,157 @@
 		  <form action="/venues/new" method="POST" id="new-venue-form" class="form-horizontal" enctype="multipart/form-data">
 		    
 		    <fieldset>
-		      <legend>About venue</legend>
-		      <div class="control-group">
-		        <label class="control-label" for="name">Venue name</label>
-		        <div class="controls">
-		          <input type="text" id="name" name="name" value="" class="input-xxlarge" data-required="true">
-		        </div>
-		      </div>
-		      <div class="control-group ">
-		        <label class="control-label" for="about">Short description</label>
-		        <div class="controls">
-		          <textarea id="about" name="about" cols="50" class="input-xxlarge" rows="10" data-required="true"></textarea>
-		          <p class="help-inline"></p>
-		        </div>
-		      </div>
+		    	<legend data-toggle="collapse" data-target="#basic-info">Basic Information</legend>
+		    	<div id="basic-info" class="collapse in">		    		
+			      <div class="control-group">
+			        <label class="control-label" for="name">Venue name</label>
+			        <div class="controls">
+			          <input type="text" id="name" name="name" value="" class="input-xxlarge" data-required="true">
+			        </div>
+			      </div>
+			      <div class="control-group ">
+			        <label class="control-label" for="about">Description</label>
+			        <div class="controls">
+			          <textarea id="about" name="about" cols="50" class="input-xxlarge" rows="4" data-required="true"></textarea>
+			          <p class="help-inline"></p>
+			        </div>
+			      </div>
+			    
+			      <div class="control-group">
+			        <label class="control-label" for="address-line1">Street Address</label>
+			        <div class="controls">
+			          <input type="text" id="address-line1" name="address-line1" value="" class="input-xlarge" placeholder="12 Somplace Street" data-required="true">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <!--label class="control-label" for="address-line2">Address Line 2</label-->
+			        <div class="controls">
+			          <input type="text" id="address-line2" name="address-line2" value="" class="input-xlarge">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="address-postCode">Post Code</label>
+			        <div class="controls">
+			          <input type="text" id="address-postCode" name="address-postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="address-town">Town</label>
+			        <div class="controls">
+			          <input type="text" id="address-town" name="address-town" value="" class="input-xlarge" placeholder="London" data-required="true">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			      	<div class="controls">
+			      		{{#unless showMap}}
+			      		<button id="validate-address" type="button" class="btn btn-small">Validate Address</button>
+			      		{{/unless}}
+			      		{{#if showMap}}
+			      		<input id="address_correct_checkbox" type="checkbox"> Yes, this address and marker are correct?
+			      		{{/if}}
+			      	</div>
+			      </div>
+			      {{#if showMap}}
+			      	{{> map}}
+	  			  {{/if}}
+
+			      <div class="control-group">
+			        <label class="control-label" for="contact-contactName">Contact Name</label>
+			        <div class="controls">
+			          <input type="text" id="contact-contactName" name="contact-contactName" value="" class="input-xlarge" data-required="true">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="contact-email">Email</label>
+			        <div class="controls">
+			          <input type="text" id="contact-email" name="contact-email" value="" class="input-xlarge" data-required="true" data-type="email">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="contact-telephone">Telephone</label>
+			        <div class="controls">
+			          <input type="text" id="contact-telephone" name="contact-telephone" value="" class="input-xlarge" data-required="true" data-type="digits">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="contact-website">Website</label>
+			        <div class="controls">
+			          <input type="text" id="contact-website" name="contact-website" value="" class="input-xlarge" data-required="true">
+			        </div>
+			      </div>
+		  		</div>
+
+		  		<div class="control-group">
+		  			<label class="control-label">Hire Type</label>
+		  			<div class="controls">
+				        <label class="radio">
+						  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+						  Dry Hire
+						</label>
+						<label class="radio">
+						  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+						  Wet Hire (Bespoke)
+						</label>
+						<label class="radio">
+						  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option2">
+						  Both
+						</label>
+					</div>
+		  		</div>
+
 		    </fieldset>
 
 		    <fieldset>
-		      <legend>Address</legend>
-		      <div class="control-group">
-		        <label class="control-label" for="address-line1">Address Line 1</label>
-		        <div class="controls">
-		          <input type="text" id="address-line1" name="address-line1" value="" class="input-xlarge" placeholder="12 Somplace Street" data-required="true">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="address-line2">Address Line 2</label>
-		        <div class="controls">
-		          <input type="text" id="address-line2" name="address-line2" value="" class="input-xlarge">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="address-postCode">Post Code</label>
-		        <div class="controls">
-		          <input type="text" id="address-postCode" name="address-postCode" value="" class="input-xlarge" placeholder="AA1 2BC" data-required="true">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="address-town">Town</label>
-		        <div class="controls">
-		          <input type="text" id="address-town" name="address-town" value="" class="input-xlarge" placeholder="London" data-required="true">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		      	<div class="controls">
-		      		<button id="validate-address" type="button" class="btn btn-small btn-danger">Validate Address</button>
-		      	</div>
-		      </div>
-		      {{#if showMap}}
-		      	{{> map}}
-  			  {{/if}}
-		    </fieldset>
-
-		    <fieldset>
-		      <legend>Rooms</legend>
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-name-0">Room</label>
-		        <div class="controls">
-		          <input type="text" id="rooms-name-0" name="rooms-name-0" value="" class="input-xxlarge">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-description-0">Short description</label>
-		        <div class="controls">
-		          <textarea id="rooms-description-0" name="rooms-description-0" cols="50" class="input-xxlarge" rows="10"></textarea>
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-maxCapacityStanding-0">Max Capacity Standing</label>
-		        <div class="controls">
-		          <input type="text" id="rooms-maxCapacityStanding-0" name="rooms-maxCapacityStanding-0" value="" class="input-mini" placeholder="e.g. 300" data-type="digits">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-maxCapacityTheatre-0">Max Capacity Threatre</label>
-		        <div class="controls">
-		          <input type="text" id="rooms-maxCapacityTheatre-0" name="rooms-maxCapacityTheatre-0" value="" class="input-mini" data-type="digits">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-maxCapacityBanquet-0">Max Capacity Banquet</label>
-		        <div class="controls">
-		          <input type="text" id="rooms-maxCapacityBanquet-0" name="rooms-maxCapacityBanquet-0" value="" class="input-mini" data-type="digits">
-		        </div>
-		      </div>		      
-		      <div class="control-group">
-		        <label class="control-label" for="rooms-dimensions-0">Dimensions (* sq foot)</label>
-		        <div class="controls">
-		          <input type="text" id="rooms-dimensions-0" name="rooms-dimensions-0" value="" class="input-mini" placeholder="e.g 3000">
-		        </div>
-		      </div>
-		      <!--a class="btn btn-small" href="#"><i class="icon-plus"></i> Add Another Room</a-->
-		    </fieldset>
-
-		    <fieldset>
-		      <legend>Contact Details</legend>
-		      <div class="control-group">
-		        <label class="control-label" for="contact-contactName">Contact Name</label>
-		        <div class="controls">
-		          <input type="text" id="contact-contactName" name="contact-contactName" value="" class="input-xlarge" data-required="true">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="contact-email">Email</label>
-		        <div class="controls">
-		          <input type="text" id="contact-email" name="contact-email" value="" class="input-xlarge" data-required="true" data-type="email">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="contact-telephone">Telephone</label>
-		        <div class="controls">
-		          <input type="text" id="contact-telephone" name="contact-telephone" value="" class="input-xlarge" data-required="true" data-type="digits">
-		        </div>
-		      </div>
-		      <div class="control-group">
-		        <label class="control-label" for="contact-website">Website</label>
-		        <div class="controls">
-		          <input type="text" id="contact-website" name="contact-website" value="" class="input-xlarge" data-required="true">
-		        </div>
+		      <legend data-toggle="collapse" data-target="#room-info">Rooms</legend>
+		      <div id="room-info" class="collapse in">
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-name-0">Room</label>
+			        <div class="controls">
+			          <input type="text" id="rooms-name-0" name="rooms-name-0" value="" class="input-xxlarge">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-description-0">Short description</label>
+			        <div class="controls">
+			          <textarea id="rooms-description-0" name="rooms-description-0" cols="50" class="input-xxlarge" rows="10"></textarea>
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-maxCapacityStanding-0">Max Capacity Standing</label>
+			        <div class="controls">
+			          <input type="text" id="rooms-maxCapacityStanding-0" name="rooms-maxCapacityStanding-0" value="" class="input-mini" placeholder="e.g. 300" data-type="digits">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-maxCapacityTheatre-0">Max Capacity Threatre</label>
+			        <div class="controls">
+			          <input type="text" id="rooms-maxCapacityTheatre-0" name="rooms-maxCapacityTheatre-0" value="" class="input-mini" data-type="digits">
+			        </div>
+			      </div>
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-maxCapacityBanquet-0">Max Capacity Banquet</label>
+			        <div class="controls">
+			          <input type="text" id="rooms-maxCapacityBanquet-0" name="rooms-maxCapacityBanquet-0" value="" class="input-mini" data-type="digits">
+			        </div>
+			      </div>		      
+			      <div class="control-group">
+			        <label class="control-label" for="rooms-dimensions-0">Dimensions (* sq foot)</label>
+			        <div class="controls">
+			          <input type="text" id="rooms-dimensions-0" name="rooms-dimensions-0" value="" class="input-mini" placeholder="e.g 3000">
+			        </div>
+			      </div>
 		      </div>
 		    </fieldset>
 
-		    <fieldset>
+		    
+
+		    <!--fieldset>
 		      <legend>Add Photos</legend>
 		      <div>
 		        <input id="file" type="file" name="picture" multiple="">
 		        <output id="list"></output>
 		      </div>
-		    </fieldset>		    
+		    </fieldset-->		    
 		    <br>
 
 		    <fieldset>

@@ -55,15 +55,17 @@ Template.newForm.events
 		addressl2 = $.trim(t.find("#address-line2").value)
 		addresspc = $.trim(t.find("#address-postCode").value)
 		addresstwn = $.trim(t.find("#address-town").value)
-
-		concatAddress = "#{addressl1} #{addressl2} #{addresspc} #{addresstwn}".split(' ').join('+')
-		Meteor.call "geoCode", concatAddress, (err, results) ->
-			if results.length				
-				Session.set('lat', results[0].lat)
-				Session.set('lng', results[0].lng)
-				Session.set('showMap', true)
-			else
-				alert "are you sure you have entered address correctly? please have a look and try again"
+		if addressl1 is "" and addresspc is "" and addresstwn is ""
+			alert "fill form out bish"
+		else
+			concatAddress = "#{addressl1} #{addressl2} #{addresspc} #{addresstwn}".split(' ').join('+')
+			Meteor.call "geoCode", concatAddress, (err, results) ->
+				if results.length				
+					Session.set('lat', results[0].lat)
+					Session.set('lng', results[0].lng)
+					Session.set('showMap', true)
+				else
+					alert "are you sure you have entered address correctly? please have a look and try again"
 	
 	'submit form': (e, t) ->
 		e.preventDefault()
@@ -105,7 +107,9 @@ Template.newForm.events
 				email: $.trim(t.find("#contact-email").value)
 				telephone: $.trim(t.find("#contact-telephone").value)
 				website: $.trim(t.find("#contact-website").value)
-			}			
+			}	
+
+			publish = false	
 			
 			console.log name
 
@@ -115,6 +119,7 @@ Template.newForm.events
 				address
 				rooms
 				contact
+				publish
 				(err, id) -> console.log id
 
 
