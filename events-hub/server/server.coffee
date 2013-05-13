@@ -1,14 +1,17 @@
 Meteor.publish "venues", () -> Venues.find()
 
 Meteor.methods
-	createVenue: (name, about, address, rooms, contact, publish) ->
+	createVenue: (name, about, hiretype, address, rooms, contact, publish, facilities) ->
 		Venues.insert
 			name: name
 			about: about
+			hiretype: hiretype
 			address: address
 			rooms: rooms
 			contact: contact
 			publish: false
+			facilities: facilities
+			createdOn: new Date
 	geoCode: (addressSearchString) ->
 		result = Meteor.http.get "http://maps.googleapis.com/maps/api/geocode/json",
 			params:

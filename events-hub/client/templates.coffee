@@ -67,17 +67,22 @@ Template.newForm.events
 				else
 					alert "are you sure you have entered address correctly? please have a look and try again"
 	
-	'submit form': (e, t) ->
+	'submit #new-venue-form': (e, t) ->		
 		e.preventDefault()
 
 		addressl1 = $.trim(t.find("#address-line1").value)
 		addressl2 = $.trim(t.find("#address-line2").value)
 		addresspc = $.trim(t.find("#address-postCode").value)
 		addresstwn = $.trim(t.find("#address-town").value)
-
-		if $( 'form' ).parsley( 'validate' )
+		$('#new-venue-form').validate
+			onfocusout: false
+			invalidHandler: (form, validator) ->
+				errors = validator.numberOfInvalids()
+				validator.errorList[0].element.focus()  if errors
+		if $('#new-venue-form').valid()
 			name = $.trim(t.find("#name").value)
 			about = $.trim(t.find("#about").value)
+			hiretype = t.find("input[name='optionsRadios']:checked").value
 
 			address = { 
 				line1: addressl1
@@ -107,7 +112,12 @@ Template.newForm.events
 				email: $.trim(t.find("#contact-email").value)
 				telephone: $.trim(t.find("#contact-telephone").value)
 				website: $.trim(t.find("#contact-website").value)
-			}	
+			}
+
+			# find all selected facilities checkbox values
+			selectedFacilitiesElements = t.findAll("label input[type='checkbox']:checked")
+			selectedFacilitiesValues = []
+			selectedFacilitiesValues.push elems.value for elems in selectedFacilitiesElements	
 
 			publish = false	
 			
@@ -116,10 +126,12 @@ Template.newForm.events
 			Meteor.call "createVenue",
 				name
 				about
+				hiretype
 				address
 				rooms
 				contact
 				publish
+				selectedFacilitiesValues
 				(err, id) -> console.log id
 
 
