@@ -15,7 +15,7 @@ Template.content.showHome = ->
 Template.content.showNewForm = ->
 	ifViewing 'newVenueForm'
 
-Template.content.showGetVenues = ->
+Template.content.showVenues = ->
 	ifViewing 'venues'
 
 Template.content.showAbout = ->
@@ -27,8 +27,18 @@ Template.content.showContactUs = ->
 Template.content.showServices = ->
 	ifViewing 'services'
 
+Template.content.showVenue= ->
+	ifViewing 'venue'
+
 Template.newForm.showMap = ->
 	showMap()
+
+Template.venue.document = ()->
+	Venues.findOne Session.get "currentVenue"
+
+Template.venues.all = ()->
+	console.log "kshfkhhkhhhkhhkhkhk"
+	Venues.find()
 
 Template.map.rendered = ()->
 	apiKey = "66fbb0e43eb647e7aa930936d2dce669"
@@ -132,7 +142,9 @@ Template.newForm.events
 				contact
 				publish
 				selectedFacilitiesValues
-				(err, id) -> console.log id
+				(err, id) -> 
+					console.log id
+					Backbone.history.navigate "/venues/" + id, true
 
 
 

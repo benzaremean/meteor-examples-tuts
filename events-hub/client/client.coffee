@@ -16,8 +16,10 @@ EventsRouter = Backbone.Router.extend
 		Session.set 'currentView', 'venues'
 	newVenue: () -> 
 		Session.set 'currentView', 'newVenueForm'
-	showVenue: () -> 
+	showVenue: (id) ->
+		console.log id
 		Session.set 'currentView', 'venue'
+		Session.set 'currentVenue', id
 	showServices: () -> 
 		Session.set 'currentView', 'services'
 	showAbout: () -> 

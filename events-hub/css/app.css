@@ -4,6 +4,15 @@ body {
     padding-bottom: 40px;
 }
 
+ul {
+    list-style:none;
+}
+
+.caption p {
+    height: 2em; /* adjust based on line-height * rows desired */
+    overflow: hidden;
+}
+
 label.error {
 	color: #B94A48 !important;
 	font-weight: 300;

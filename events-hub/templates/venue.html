@@ -1,0 +1,7 @@
+<template name='venue'>
+	{{#if document}}
+		<p>{{ document.name }}</p>
+		<p>{{ document.address.line1 }}</p>
+		<p>{{ document.rooms.0.capacity.banquet }}</p>
+	{{/if}}
+</template>
