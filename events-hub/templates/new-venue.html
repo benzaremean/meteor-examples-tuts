@@ -50,7 +50,7 @@
 			      		<button id="validate-address" type="button" class="btn btn-small">Validate Address</button>
 			      		{{/unless}}
 			      		{{#if showMap}}
-			      		<input id="address_correct_checkbox" type="checkbox"> Yes, this address and marker are correct?
+			      		<input id="address_correct_checkbox" type="checkbox" value="1"> Yes, this address and marker are correct?
 			      		{{/if}}
 			      	</div>
 			      </div>
@@ -163,17 +163,17 @@
 			  <label class="checkbox span2">
 			    <input type="checkbox" id="inlineCheckbox5" value="option5"> Wedding Licence
 			  </label>	   	    
-		    </fieldset>	
+		    </fieldset>
 
-		    
-
-		    <!--fieldset>
+		    <br>
+		    <fieldset>
 		      <legend>Add Photos</legend>
-		      <div>
-		        <input id="file" type="file" name="picture" multiple="">
-		        <output id="list"></output>
-		      </div>
-		    </fieldset-->	
+		      <!--div id="picture-upload">
+		        <input id="hide-file" type="file" name="file" />
+		      </div-->
+		      <input type="filepicker-dragdrop" data-fp-apikey="AU2hmvvEDS5GPPz1wn5ecz" data-fp-multiple="true"/>
+		      <!--button class="btn btn-primary" id="choose-files">Choose Files</button-->
+		    </fieldset>	
 
 		        
 		    <br>

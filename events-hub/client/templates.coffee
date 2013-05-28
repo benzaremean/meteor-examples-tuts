@@ -40,6 +40,14 @@ Template.venues.all = ()->
 	console.log "kshfkhhkhhhkhhkhkhk"
 	Venues.find()
 
+Template.newForm.rendered = ()->
+	#myDropzone = new Dropzone "#picture-upload", { url: "/venues/new" }
+	script = '<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>'
+	$('body').append(script)
+	filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+
+
+
 Template.map.rendered = ()->
 	apiKey = "66fbb0e43eb647e7aa930936d2dce669"
 	attribution = "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://cloudmade.com\">CloudMade</a>"
@@ -145,8 +153,20 @@ Template.newForm.events
 				(err, id) -> 
 					console.log id
 					Backbone.history.navigate "/venues/" + id, true
-
-
+###
+	'click #choose-files': (e, t)->
+		e.preventDefault()
+		alert "yap paripa"
+		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+		filepicker.pick
+		  mimetypes: ["image/*", "text/plain"]
+		  container: "window"
+		  services: ["COMPUTER", "FACEBOOK", "GMAIL"]
+		, ((FPFile) ->
+		  console.log JSON.stringify(FPFile)
+		), (FPError) ->
+		  console.log FPError.toString()
+###
 
 
 
