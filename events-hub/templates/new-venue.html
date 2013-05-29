@@ -168,11 +168,24 @@
 		    <br>
 		    <fieldset>
 		      <legend>Add Photos</legend>
-		      <!--div id="picture-upload">
-		        <input id="hide-file" type="file" name="file" />
-		      </div-->
-		      <input type="filepicker-dragdrop" data-fp-apikey="AU2hmvvEDS5GPPz1wn5ecz" data-fp-multiple="true"/>
-		      <!--button class="btn btn-primary" id="choose-files">Choose Files</button-->
+		      <div class="control-group">
+		      	{{#unless uploadSuccessful}}
+		      	<label class="control-label" for="choose-files">Choose Files</label>
+		      	{{/unless}}
+		      	<div class="controls">
+		      		
+			      <!--div id="picture-upload">
+			        <input id="hide-file" type="file" name="file" />
+			      </div-->
+			      <!--input type="filepicker-dragdrop" data-fp-apikey="AU2hmvvEDS5GPPz1wn5ecz" data-fp-multiple="true"/-->
+
+		      		{{#if uploadSuccessful}}
+		      			{{>upldArray}}
+		      		{{ else }}
+		      			<button class="btn btn-small" id="choose-files">Click to Add</button>
+		      		{{/if}}
+		      	</div>
+		      </div>
 		    </fieldset>	
 
 		        
@@ -195,6 +208,18 @@
 		  </form>
 		</div>	
 	</div>
+</template>
+
+<template name="upldArray"> 
+	{{#each uploadedpic}}
+		{{>upld}}
+	{{/each}}
+</template>
+
+<template name="upld">
+	<p>{{ filename }}</p>
+	<input class="xx" type="hidden" value="{{ url }}">
+	<img src="{{ url }}" height="60" width="60"><p class="remove">x</p>
 </template>
 
 <template name="map">

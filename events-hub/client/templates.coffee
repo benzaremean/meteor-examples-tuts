@@ -1,5 +1,6 @@
 ifViewing = (viewName) -> Session.get('currentView') is viewName
 showMap = ()-> Session.get('showMap')
+uploadSuccessful = ()-> Session.get('upldsuccess') and Session.get("myarray").length > 0
 
 Template.globalNav.events
 	'click a#new': () -> Backbone.history.navigate 'venues/new', true
@@ -33,6 +34,9 @@ Template.content.showVenue= ->
 Template.newForm.showMap = ->
 	showMap()
 
+Template.newForm.uploadSuccessful = ->
+	uploadSuccessful()
+
 Template.venue.document = ()->
 	Venues.findOne Session.get "currentVenue"
 
@@ -45,6 +49,12 @@ Template.newForm.rendered = ()->
 	script = '<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>'
 	$('body').append(script)
 	filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+
+Template.upldArray.uploadedpic = Session.get 'myarray'
+
+Template.upldArray.rendered = ()->
+	console.log "dkjfkjdhjdfhjdh"
+	console.log Session.get 'myarray'
 
 
 
@@ -65,7 +75,30 @@ Template.map.rendered = ()->
 	  styleId: 1714
 	  maxZoom: 18
 	).addTo map
-	marker = L.marker([lat, lng]).addTo(map);
+	marker = L.marker([lat, lng]).addTo(map)
+
+
+Template.upld.events
+	'click .remove': (evt, tmpl)->
+		yy = Session.get('myarray')
+		url = tmpl.find(".xx").value
+		console.log url
+		x = _.find yy, (y) ->
+  			y["url"] is url
+		console.log x
+		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+		filepicker.remove x, ->
+  			console.log "Removed"
+  			#console.log yy
+  			evens = _.filter(yy, (y) ->
+  				y["url"] isnt url
+  			)
+  			console.log evens.length
+  			if evens.length is 0
+  				Session.set('upldsuccess', false)
+  			Session.set('myarray', evens)
+ 
+
 
 Template.newForm.events
 	'click #validate-address': (e, t) ->
@@ -153,20 +186,29 @@ Template.newForm.events
 				(err, id) -> 
 					console.log id
 					Backbone.history.navigate "/venues/" + id, true
-###
+
 	'click #choose-files': (e, t)->
 		e.preventDefault()
-		alert "yap paripa"
 		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
-		filepicker.pick
+		filepicker.pickMultiple
 		  mimetypes: ["image/*", "text/plain"]
 		  container: "window"
 		  services: ["COMPUTER", "FACEBOOK", "GMAIL"]
-		, ((FPFile) ->
-		  console.log JSON.stringify(FPFile)
-		), (FPError) ->
-		  console.log FPError.toString()
-###
+		, (FPFile) ->
+			Session.set('upldsuccess', true)
+			Session.set('myarray', FPFile)
+			#console.log FPFile
+		, (FPError) ->
+			console.log FPError.toString()
+
+ 
+
+
+
+
+
+
+
 
 
 
