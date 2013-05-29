@@ -1,6 +1,6 @@
 ifViewing = (viewName) -> Session.get('currentView') is viewName
 showMap = ()-> Session.get('showMap')
-uploadSuccessful = ()-> Session.get('upldsuccess') and Session.get("myarray").length > 0
+uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?
 
 Template.globalNav.events
 	'click a#new': () -> Backbone.history.navigate 'venues/new', true
@@ -41,22 +41,17 @@ Template.venue.document = ()->
 	Venues.findOne Session.get "currentVenue"
 
 Template.venues.all = ()->
-	console.log "kshfkhhkhhhkhhkhkhk"
 	Venues.find()
 
 Template.newForm.rendered = ()->
-	#myDropzone = new Dropzone "#picture-upload", { url: "/venues/new" }
-	script = '<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>'
-	$('body').append(script)
-	filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+	#if not attached, attach it bishes
+	if $('#filepicker_comm_iframe').length is 0
+		script = '<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>'
+		$('body').append(script)
+		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
 
-Template.upldArray.uploadedpic = Session.get 'myarray'
-
-Template.upldArray.rendered = ()->
-	console.log "dkjfkjdhjdfhjdh"
-	console.log Session.get 'myarray'
-
-
+Template.upldArray.uploadedpic = ()->
+	Session.get 'myarray'
 
 Template.map.rendered = ()->
 	apiKey = "66fbb0e43eb647e7aa930936d2dce669"
@@ -77,26 +72,39 @@ Template.map.rendered = ()->
 	).addTo map
 	marker = L.marker([lat, lng]).addTo(map)
 
+Template.chooseFileButton.events
+	'click #choose-files': (evt, tmpl)->
+		evt.preventDefault()
+		#using filepicker.io to upload files
+		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
+		filepicker.pickMultiple
+		  mimetypes: ["image/*", "text/plain"]
+		  container: "window"
+		  services: ["COMPUTER", "FACEBOOK", "GMAIL"]
+		, ((FPFile) ->
+			Session.set('upldsuccess', true)
+			Session.set('myarray', FPFile)
+		), (FPError) ->
+			console.log FPError.toString()
+
 
 Template.upld.events
 	'click .remove': (evt, tmpl)->
-		yy = Session.get('myarray')
+		uploadedPics = Session.get('myarray')
 		url = tmpl.find(".xx").value
 		console.log url
-		x = _.find yy, (y) ->
-  			y["url"] is url
-		console.log x
+		forRemoval = _.find uploadedPics, (pic) ->
+  			pic["url"] is url
 		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
-		filepicker.remove x, ->
-  			console.log "Removed"
-  			#console.log yy
-  			evens = _.filter(yy, (y) ->
-  				y["url"] isnt url
+		
+		filepicker.remove forRemoval, ->
+  			notForRemoval = _.filter(uploadedPics, (pic) ->
+  				pic["url"] isnt url
   			)
-  			console.log evens.length
-  			if evens.length is 0
+
+  			if notForRemoval.length is 0
   				Session.set('upldsuccess', false)
-  			Session.set('myarray', evens)
+  			Session.set('myarray', notForRemoval)
  
 
 
@@ -149,7 +157,7 @@ Template.newForm.events
 				standing: $.trim(t.find("#rooms-maxCapacityStanding-0").value)
 				theatre: $.trim(t.find("#rooms-maxCapacityTheatre-0").value)
 				banquet: $.trim(t.find("#rooms-maxCapacityBanquet-0").value)
-				dimensions: $.trim(t.find("#rooms-dimensions-0").value)
+				dimensions: $.trim(t.find("#rooms-dimensions-0").value)  
 			}
 			room = {
 				roomname: $.trim(t.find("#rooms-name-0").value)
@@ -170,10 +178,16 @@ Template.newForm.events
 			selectedFacilitiesValues = []
 			selectedFacilitiesValues.push elems.value for elems in selectedFacilitiesElements	
 
-			publish = false	
-			
-			console.log name
+			#set publish flag to false
+			publish = false
 
+			
+			pics = []			
+			if Session.get('myarray')?
+				pics = Session.get('myarray') 
+
+
+			#create venue
 			Meteor.call "createVenue",
 				name
 				about
@@ -183,25 +197,10 @@ Template.newForm.events
 				contact
 				publish
 				selectedFacilitiesValues
+				pics
 				(err, id) -> 
 					console.log id
 					Backbone.history.navigate "/venues/" + id, true
-
-	'click #choose-files': (e, t)->
-		e.preventDefault()
-		filepicker.setKey "AU2hmvvEDS5GPPz1wn5ecz"
-		filepicker.pickMultiple
-		  mimetypes: ["image/*", "text/plain"]
-		  container: "window"
-		  services: ["COMPUTER", "FACEBOOK", "GMAIL"]
-		, (FPFile) ->
-			Session.set('upldsuccess', true)
-			Session.set('myarray', FPFile)
-			#console.log FPFile
-		, (FPError) ->
-			console.log FPError.toString()
-
- 
 
 
 

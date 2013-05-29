@@ -27,13 +27,9 @@ EventsRouter = Backbone.Router.extend
 	showContactUs: () -> 
 		Session.set 'currentView', 'contactUs'
 
-
 Meteor.startup () ->
 	new EventsRouter
 	Backbone.history.start pushState: true
-	#filepicker.setKey 'AU2hmvvEDS5GPPz1wn5ecz'
-	#filepicker.pickMultiple (fpfiles) ->
-  	#	console.log JSON.stringify(fpfiles)
 
 
 

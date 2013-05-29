@@ -173,21 +173,14 @@
 		      	<label class="control-label" for="choose-files">Choose Files</label>
 		      	{{/unless}}
 		      	<div class="controls">
-		      		
-			      <!--div id="picture-upload">
-			        <input id="hide-file" type="file" name="file" />
-			      </div-->
-			      <!--input type="filepicker-dragdrop" data-fp-apikey="AU2hmvvEDS5GPPz1wn5ecz" data-fp-multiple="true"/-->
-
 		      		{{#if uploadSuccessful}}
 		      			{{>upldArray}}
 		      		{{ else }}
-		      			<button class="btn btn-small" id="choose-files">Click to Add</button>
+		      			{{>chooseFileButton}}
 		      		{{/if}}
 		      	</div>
 		      </div>
-		    </fieldset>	
-
+		    </fieldset>
 		        
 		    <br>
 
@@ -208,6 +201,10 @@
 		  </form>
 		</div>	
 	</div>
+</template>
+
+<template name="chooseFileButton">
+	<button class="btn btn-small" id="choose-files">Click to Add</button>
 </template>
 
 <template name="upldArray"> 
