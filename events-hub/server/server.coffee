@@ -1,12 +1,13 @@
 Meteor.publish "venues", () -> Venues.find()
 
 Meteor.methods
-	createVenue: (name, about, hiretype, address, rooms, contact, publish, facilities, pics) ->
+	createVenue: (name, about, hiretype, address, loc, rooms, contact, publish, facilities, pics) ->
 		Venues.insert
 			name: name
 			about: about
 			hiretype: hiretype
 			address: address
+			loc, loc
 			rooms: rooms
 			contact: contact
 			publish: false
@@ -23,3 +24,10 @@ Meteor.methods
 			result.data.results.map (x) ->
 				lat: x.geometry.location.lat
 				lng: x.geometry.location.lng
+
+	getLocationsWithinRadius: (query) ->
+		Venues.find(query)
+
+Meteor.startup () ->
+	Venues._ensureIndex loc: "2d"
+

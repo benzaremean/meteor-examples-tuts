@@ -1,0 +1,15 @@
+<template name="home">
+	<div class="row">
+		<div class="span9">
+			{{>searchform}}
+		</div>
+	</div>
+</template>
+
+<template name="searchform">
+	<form class="form-inline">
+		I am looking for venue within  <input id="radius" class="span1" type="text" name="distancefrom">
+		miles of  <input id="address-search" class="span3" type="text" name="searchreference" placeholder="Town, Address or Post Code">
+		<button id="searchbutton" class="btn" type="button">Search</button>
+	</form>
+</template>

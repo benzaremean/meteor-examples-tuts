@@ -3,11 +3,11 @@ showMap = ()-> Session.get('showMap')
 uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?
 
 Template.globalNav.events
-	'click a#new': () -> Backbone.history.navigate 'venues/new', true
-	'click a#venues': () -> Backbone.history.navigate 'venues', true
-	'click a#services': () -> Backbone.history.navigate 'services', true
-	'click a#about': () -> Backbone.history.navigate 'about', true
-	'click a#contact-us': () -> Backbone.history.navigate 'contact-us', true
+	'click a#new': ()-> Backbone.history.navigate 'venues/new', true
+	'click a#venues': ()-> Backbone.history.navigate 'venues', true
+	'click a#services': ()-> Backbone.history.navigate 'services', true
+	'click a#about': ()-> Backbone.history.navigate 'about', true
+	'click a#contact-us': ()-> Backbone.history.navigate 'contact-us', true
 
 
 Template.content.showHome = ->
@@ -41,7 +41,14 @@ Template.venue.document = ()->
 	Venues.findOne Session.get "currentVenue"
 
 Template.venues.all = ()->
-	Venues.find()
+	if Session.get('query')?
+		console.log "aaaaaaa"
+		Meteor.call "getLocationsWithinRadius", Session.get('query'), (err, results) ->
+			results		
+	else
+		Venues.find()	
+		console.log "bbbbbbbbb"
+	
 
 Template.newForm.rendered = ()->
 	#if not attached, attach it bishes
@@ -143,14 +150,14 @@ Template.newForm.events
 			about = $.trim(t.find("#about").value)
 			hiretype = t.find("input[name='optionsRadios']:checked").value
 
-			address = { 
+			address = {
 				line1: addressl1
 				line2: addressl2
 				postcode: addresspc
-				town: addresstwn
-				long: Session.get('lng')
-				lat: Session.get('lat')
+				town: addresstwn				
 			}
+
+			loc = [Session.get('lng'), Session.get('lat')]
 
 			rooms = []
 			capacity = {
@@ -193,6 +200,7 @@ Template.newForm.events
 				about
 				hiretype
 				address
+				loc
 				rooms
 				contact
 				publish
@@ -201,6 +209,30 @@ Template.newForm.events
 				(err, id) -> 
 					console.log id
 					Backbone.history.navigate "/venues/" + id, true
+
+
+Template.searchform.events
+	'click #searchbutton': (e, t) ->
+		addressreference = $.trim(t.find("#address-search").value)
+		radius = $.trim(t.find("#radius").value)
+		if addressreference is ""
+			alert "fill form out bish"
+		else
+			Meteor.call "geoCode", addressreference, (err, results) ->
+				if results.length				
+					Session.set('search-reference-lat', results[0].lat)
+					Session.set('search-reference-lng', results[0].lng)
+					console.log Session.get('search-reference-lat'), Session.get('search-reference-lng')
+					query = loc:
+					  $geoWithin:
+					    $centerSphere: [[results[0].lng, results[0].lat], radius / 3959]
+					console.log query
+					Session.set('query', query)
+					Backbone.history.navigate 'venues', true
+
+				else
+					alert "are you sure you have entered address correctly? please have a look and try again"
+
 
 
 
