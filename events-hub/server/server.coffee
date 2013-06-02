@@ -7,7 +7,7 @@ Meteor.methods
 			about: about
 			hiretype: hiretype
 			address: address
-			loc, loc
+			loc: loc
 			rooms: rooms
 			contact: contact
 			publish: false
@@ -25,8 +25,8 @@ Meteor.methods
 				lat: x.geometry.location.lat
 				lng: x.geometry.location.lng
 
-	getLocationsWithinRadius: (query) ->
-		Venues.find(query)
+	getVenues: (query) ->
+		Venues.find(query).fetch()
 
 Meteor.startup () ->
 	Venues._ensureIndex loc: "2d"

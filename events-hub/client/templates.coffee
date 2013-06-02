@@ -1,6 +1,6 @@
 ifViewing = (viewName) -> Session.get('currentView') is viewName
 showMap = ()-> Session.get('showMap')
-uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?
+uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?.length > 0
 
 Template.globalNav.events
 	'click a#new': ()-> Backbone.history.navigate 'venues/new', true
@@ -41,13 +41,7 @@ Template.venue.document = ()->
 	Venues.findOne Session.get "currentVenue"
 
 Template.venues.all = ()->
-	if Session.get('query')?
-		console.log "aaaaaaa"
-		Meteor.call "getLocationsWithinRadius", Session.get('query'), (err, results) ->
-			results		
-	else
-		Venues.find()	
-		console.log "bbbbbbbbb"
+	Session.get('venues')
 	
 
 Template.newForm.rendered = ()->
@@ -214,22 +208,23 @@ Template.newForm.events
 Template.searchform.events
 	'click #searchbutton': (e, t) ->
 		addressreference = $.trim(t.find("#address-search").value)
-		radius = $.trim(t.find("#radius").value)
+		radius = parseInt $.trim(t.find("#radius").value)
+
 		if addressreference is ""
 			alert "fill form out bish"
 		else
 			Meteor.call "geoCode", addressreference, (err, results) ->
-				if results.length				
-					Session.set('search-reference-lat', results[0].lat)
-					Session.set('search-reference-lng', results[0].lng)
-					console.log Session.get('search-reference-lat'), Session.get('search-reference-lng')
+				if results.length
+					
 					query = loc:
 					  $geoWithin:
 					    $centerSphere: [[results[0].lng, results[0].lat], radius / 3959]
-					console.log query
-					Session.set('query', query)
+					
+					Meteor.call "getVenues", query, (err, results) ->
+						if results?
+							console.log results
+							Session.set 'venues', results
 					Backbone.history.navigate 'venues', true
-
 				else
 					alert "are you sure you have entered address correctly? please have a look and try again"
 

@@ -12,7 +12,11 @@ EventsRouter = Backbone.Router.extend
 	},
 	main: () ->
 		Session.set 'currentView', 'home'
-	getVenues: () -> 
+	getVenues: () ->
+		unless Session.get('venues')?.length > 0
+			console.log "hjjhhjhjhhhjhjh"
+			venues = Venues.find({}, { limit: 2 }).fetch()
+			Session.set 'venues', venues
 		Session.set 'currentView', 'venues'
 	newVenue: () -> 
 		Session.set 'currentView', 'newVenueForm'
