@@ -4,7 +4,9 @@ uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?.
 
 Template.globalNav.events
 	'click a#new': ()-> Backbone.history.navigate 'venues/new', true
-	'click a#venues': ()-> Backbone.history.navigate 'venues', true
+	'click a#venues': ()->
+		sessionStorage.setItem "venues", []
+		Backbone.history.navigate 'venues', true
 	'click a#services': ()-> Backbone.history.navigate 'services', true
 	'click a#about': ()-> Backbone.history.navigate 'about', true
 	'click a#contact-us': ()-> Backbone.history.navigate 'contact-us', true
@@ -38,7 +40,11 @@ Template.newForm.uploadSuccessful = ->
 	uploadSuccessful()
 
 Template.venue.document = ()->
-	Venues.findOne Session.get "currentVenue"
+	id = Session.get "currentVenue"
+	Meteor.call "getVenue", id, (err, result) ->
+		if result?
+			Session.set 'toShow', result
+	Session.get 'toShow'
 
 Template.venues.all = ()->
 	Session.get('venues')
@@ -213,18 +219,24 @@ Template.searchform.events
 		if addressreference is ""
 			alert "fill form out bish"
 		else
+			#reverse geocode search address
 			Meteor.call "geoCode", addressreference, (err, results) ->
 				if results.length
-					
+					#build a query string using mongo geospatial within					
 					query = loc:
 					  $geoWithin:
 					    $centerSphere: [[results[0].lng, results[0].lat], radius / 3959]
 					
 					Meteor.call "getVenues", query, (err, results) ->
-						if results?
-							console.log results
+						if results?.length > 0							
 							Session.set 'venues', results
-					Backbone.history.navigate 'venues', true
+							sessionStorage.setItem "venues", JSON.stringify results
+							Backbone.history.navigate 'venues', true
+						else
+							#ideally direct to /venues and show no result message
+							alert 'no results were found try again'
+
+				#if no results	
 				else
 					alert "are you sure you have entered address correctly? please have a look and try again"
 

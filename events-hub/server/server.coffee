@@ -1,4 +1,4 @@
-Meteor.publish "venues", () -> Venues.find()
+#Meteor.publish "venues", () -> Venues.find()
 
 Meteor.methods
 	createVenue: (name, about, hiretype, address, loc, rooms, contact, publish, facilities, pics) ->
@@ -14,6 +14,7 @@ Meteor.methods
 			facilities: facilities
 			createdOn: new Date
 			images: pics
+
 	geoCode: (addressSearchString) ->
 		result = Meteor.http.get "http://maps.googleapis.com/maps/api/geocode/json",
 			params:
@@ -26,7 +27,9 @@ Meteor.methods
 				lng: x.geometry.location.lng
 
 	getVenues: (query) ->
-		Venues.find(query).fetch()
+		Venues.find(query, { limit: 10 }).fetch()
+	getVenue: (id) ->
+		Venues.findOne id
 
 Meteor.startup () ->
 	Venues._ensureIndex loc: "2d"

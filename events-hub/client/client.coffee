@@ -1,4 +1,4 @@
-Meteor.subscribe "venues"
+#Meteor.subscribe "venues"
 
 EventsRouter = Backbone.Router.extend
 	routes: {
@@ -14,9 +14,14 @@ EventsRouter = Backbone.Router.extend
 		Session.set 'currentView', 'home'
 	getVenues: () ->
 		unless Session.get('venues')?.length > 0
-			console.log "hjjhhjhjhhhjhjh"
-			venues = Venues.find({}, { limit: 2 }).fetch()
-			Session.set 'venues', venues
+			if sessionStorage.getItem("venues")?.length is 0
+				Meteor.call "getVenues", {}, (err, results) ->
+					if results?
+						console.log results
+						Session.set 'venues', results
+			else
+				sessionSavedVenues = sessionStorage.getItem "venues"
+				Session.set 'venues', $.parseJSON sessionSavedVenues
 		Session.set 'currentView', 'venues'
 	newVenue: () -> 
 		Session.set 'currentView', 'newVenueForm'
