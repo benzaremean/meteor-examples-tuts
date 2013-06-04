@@ -5,11 +5,28 @@
 		</div>
 
 		<div class="span9">
-			<ul class="thumbnails">
-			{{#each all}}
-				{{> venue-view1}}
-			{{/each}}
-			</ul>
+			<div class="row">
+				<div class="btn-toolbar text-right">
+				    <div id="display-views" class="btn-group">
+				        <a class="btn active" href="#list-view" data-toggle="tooltip"><i class="icon-list"></i></a>
+				        <a class="btn" href="#thumbnails-view"><i class="icon-th"></i></a>
+				        <a class="btn" href="#map"><i class="icon-map-marker"></i></a>
+				    </div>
+				</div>
+			</div>
+			{{#if displayView "thumbnailview"}}
+				<ul class="thumbnails">
+				{{#each all}}
+					{{> venue-view1}}
+				{{/each}}
+				</ul>			  
+			{{/if}}
+
+			{{#if displayView "listview"}}
+				{{#each all}}
+			 		{{> venue-view2}}
+			 	{{/each}}
+			{{/if}}			
 		</div>
 	</div>	
 </template>
@@ -31,3 +48,23 @@
 	    </div>
 	</li>
 </template>
+
+<template name="venue-view2">
+	<div class="listview">
+	    <div class="media">
+	        <a class="pull-left" href="venues/{{_id}}">
+	            <img class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" src="{{images.0.url}}">
+	        </a>
+	        <div class="media-body summary">
+	            <h5 class="media-heading">{{name}}</h5>
+	            <div id="display-address">{{address.postcode}}, {{address.town}}</div>
+	        </div>
+
+	        <label class="controls checkbox inline">
+	            <input type="checkbox" value="@venue.id">Compare
+	        </label>
+	    </div>
+	</div>
+	<hr class="results">
+</template>
+

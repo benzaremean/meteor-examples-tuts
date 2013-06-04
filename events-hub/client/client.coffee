@@ -20,7 +20,7 @@ EventsRouter = Backbone.Router.extend
 						console.log results
 						Session.set 'venues', results
 			else
-				sessionSavedVenues = sessionStorage.getItem "venues"
+				sessionSavedVenues = sessionStorage.getItem 'venues'
 				Session.set 'venues', $.parseJSON sessionSavedVenues
 		Session.set 'currentView', 'venues'
 	newVenue: () -> 
@@ -39,6 +39,8 @@ EventsRouter = Backbone.Router.extend
 Meteor.startup () ->
 	new EventsRouter
 	Backbone.history.start pushState: true
+	Session.set 'displayView', 'listview'
+	window.venueresultview = 'listview'
 
 
 

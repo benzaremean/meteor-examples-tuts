@@ -1,6 +1,6 @@
-ifViewing = (viewName) -> Session.get('currentView') is viewName
 showMap = ()-> Session.get('showMap')
 uploadSuccessful = ()-> Session.get('upldsuccess')? and Session.get("myarray")?.length > 0
+
 
 Template.globalNav.events
 	'click a#new': ()-> Backbone.history.navigate 'venues/new', true
@@ -11,27 +11,8 @@ Template.globalNav.events
 	'click a#about': ()-> Backbone.history.navigate 'about', true
 	'click a#contact-us': ()-> Backbone.history.navigate 'contact-us', true
 
-
-Template.content.showHome = ->
-	ifViewing 'home'
-
-Template.content.showNewForm = ->
-	ifViewing 'newVenueForm'
-
-Template.content.showVenues = ->
-	ifViewing 'venues'
-
-Template.content.showAbout = ->
-	ifViewing 'about'
-
-Template.content.showContactUs = ->
-	ifViewing 'contactUs'
-
-Template.content.showServices = ->
-	ifViewing 'services'
-
-Template.content.showVenue= ->
-	ifViewing 'venue'
+Template.content.viewing = (currentView)->
+	Session.get('currentView') is currentView
 
 Template.newForm.showMap = ->
 	showMap()
@@ -48,6 +29,9 @@ Template.venue.document = ()->
 
 Template.venues.all = ()->
 	Session.get('venues')
+
+Template.venues.displayView = (view)->
+	Session.get('displayView') is view
 	
 
 Template.newForm.rendered = ()->

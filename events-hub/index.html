@@ -25,31 +25,31 @@
 </body>
 
 <template name="content">
-  {{#if showHome}}
+  {{#if viewing "home"}}
     {{> home}}
   {{/if}}
 
-  {{#if showNewForm}}
+  {{#if viewing "newVenueForm"}}
     {{> newForm }}
   {{/if}}  
 
-  {{#if showVenues}}
+  {{#if viewing "venues"}}
     {{> venues}}  
   {{/if}}
 
-  {{#if showAbout}}
+  {{#if viewing "about"}}
     {{> about}}
   {{/if}}
 
-  {{#if showContactUs}}
+  {{#if viewing "contactUs"}}
     {{> contactUs}}
   {{/if}}
 
-  {{#if showServices}}
+  {{#if viewing "services"}}
     {{> services}}  
   {{/if}}
 
-  {{#if showVenue}}
+  {{#if viewing "venue"}}
     {{> venue}}  
   {{/if}}
 </template>
@@ -84,7 +84,7 @@
               <li><a id="contact-us">Contact Us</a></li>
               <li><a id="new">New</a></li>
             </ul>
-            {{loginButtons}}              
+                        
         </div>
       </div>
     </div>
