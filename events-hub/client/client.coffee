@@ -12,8 +12,15 @@ EventsRouter = Backbone.Router.extend
 	},
 	main: () ->
 		Session.set 'currentView', 'home'
+		#if null
+		unless Session.get('displayView')?
+			Session.set 'displayView', 'listview'
+			sessionStorage.setItem "displayView", 'listview'
+		else
+			console.log "dkjhjgdhkghdjgjkhdjhgjkhdkjghjkdhjk"
 	getVenues: () ->
-		unless Session.get('venues')?.length > 0
+		#if Session.get('venues') length is not 1 or more (not set)
+		unless Session.get('venues')?.length > 0			 
 			if sessionStorage.getItem("venues")?.length is 0
 				Meteor.call "getVenues", {}, (err, results) ->
 					if results?
@@ -21,7 +28,12 @@ EventsRouter = Backbone.Router.extend
 						Session.set 'venues', results
 			else
 				sessionSavedVenues = sessionStorage.getItem 'venues'
-				Session.set 'venues', $.parseJSON sessionSavedVenues
+				Session.set 'venues', $.parseJSON sessionSavedVenues		
+		
+		#if displayview is null
+		unless Session.get('displayView')?
+			Session.set 'displayView', sessionStorage.getItem "displayView"
+		#now set the page to venues
 		Session.set 'currentView', 'venues'
 	newVenue: () -> 
 		Session.set 'currentView', 'newVenueForm'
@@ -36,11 +48,10 @@ EventsRouter = Backbone.Router.extend
 	showContactUs: () -> 
 		Session.set 'currentView', 'contactUs'
 
-Meteor.startup () ->
-	new EventsRouter
+Meteor.startup ->
+	new EventsRouter()
 	Backbone.history.start pushState: true
-	Session.set 'displayView', 'listview'
-	window.venueresultview = 'listview'
+
 
 
 

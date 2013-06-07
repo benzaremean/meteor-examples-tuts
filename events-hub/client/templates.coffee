@@ -63,6 +63,10 @@ Template.map.rendered = ()->
 	).addTo map
 	marker = L.marker([lat, lng]).addTo(map)
 
+Template.venues.rendered = ()->
+	selector = Session.get 'displayView'
+	$('#' + selector).addClass('active')
+
 Template.chooseFileButton.events
 	'click #choose-files': (evt, tmpl)->
 		evt.preventDefault()
@@ -223,6 +227,16 @@ Template.searchform.events
 				#if no results	
 				else
 					alert "are you sure you have entered address correctly? please have a look and try again"
+
+Template.venues.events
+	'click #display-view a': (e, t)->
+		e.preventDefault()
+		clickedElement = $(e.target).attr('data-s')
+		if Session.get('displayView') isnt clickedElement
+			console.log 'i was changed'
+			Session.set 'displayView', clickedElement
+			sessionStorage.setItem "displayView", clickedElement
+
 
 
 
