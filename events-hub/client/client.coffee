@@ -22,7 +22,8 @@ EventsRouter = Backbone.Router.extend
 		#if Session.get('venues') length is not 1 or more (not set)
 		unless Session.get('venues')?.length > 0			 
 			if sessionStorage.getItem("venues")?.length is 0
-				Meteor.call "getVenues", {}, (err, results) ->
+				query = {}
+				Meteor.call "getVenues", query, (err, results) ->
 					if results?
 						console.log results
 						Session.set 'venues', results

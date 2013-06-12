@@ -2,6 +2,7 @@
 	
 	<div class="row">
 		<div class="span3">
+			{{>filterSearch}}
 		</div>
 
 		<div class="span9">
@@ -66,5 +67,31 @@
 	    </div>
 	</div>
 	<hr class="results">
+</template>
+
+<template name="filterSearch">
+	<label class="checkbox">
+    	<input class="hiretype" type="checkbox" value="1"> Dry Hire
+  	</label>
+  	<label class="checkbox">
+    	<input class="hiretype" type="checkbox" value="2"> Wet Hire (Bespoke)
+  	</label>
+	<div class="control-group">
+		<h5>Hire Type</h5>
+		<div class="controls">
+	        <label class="radio">
+			  <input class="hiretype" type="radio" name="optionsRadios" id="option1" value="1">
+			  Dry Hire
+			</label>
+			<label class="radio">
+			  <input class="hiretype" type="radio" name="optionsRadios" id="option2" value="2">
+			  Wet Hire (Bespoke)
+			</label>
+			<label class="radio">
+			  <input class="hiretype" type="radio" name="optionsRadios" id="option3" value="3" required="">
+			  Both
+			</label>
+		</div>
+	</div>
 </template>
 

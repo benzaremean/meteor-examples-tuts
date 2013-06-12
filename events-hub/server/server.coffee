@@ -26,7 +26,7 @@ Meteor.methods
 				lat: x.geometry.location.lat
 				lng: x.geometry.location.lng
 
-	getVenues: (query) ->
+	getVenues: (query) ->		
 		Venues.find(query, { limit: 10 }).fetch()
 	getVenue: (id) ->
 		Venues.findOne id

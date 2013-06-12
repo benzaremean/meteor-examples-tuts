@@ -233,9 +233,20 @@ Template.venues.events
 		e.preventDefault()
 		clickedElement = $(e.target).attr('data-s')
 		if Session.get('displayView') isnt clickedElement
-			console.log 'i was changed'
 			Session.set 'displayView', clickedElement
 			sessionStorage.setItem "displayView", clickedElement
+
+Template.filterSearch.events
+	'click .hiretype': (e, t)->
+		hiretypeValue = $(e.target).val()
+		filtered = []
+		if hiretypeValue is "3"
+			filtered = _.filter Session.get("venues"), (num) -> num isnt null
+		else
+			filtered = _.where Session.get("venues"), hiretype: hiretypeValue
+		Session.set 'venues', filtered
+		sessionStorage.setItem "venues", JSON.stringify filtered
+
 
 
 
