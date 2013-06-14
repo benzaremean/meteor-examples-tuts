@@ -203,30 +203,11 @@ Template.searchform.events
 	'click #searchbutton': (e, t) ->
 		addressreference = $.trim(t.find("#address-search").value)
 		radius = parseInt $.trim(t.find("#radius").value)
-
 		if addressreference is ""
 			alert "fill form out bish"
 		else
-			#reverse geocode search address
-			Meteor.call "geoCode", addressreference, (err, results) ->
-				if results.length
-					#build a query string using mongo geospatial within					
-					query = loc:
-					  $geoWithin:
-					    $centerSphere: [[results[0].lng, results[0].lat], radius / 3959]
-					
-					Meteor.call "getVenues", query, (err, results) ->
-						if results?.length > 0							
-							Session.set 'venues', results
-							sessionStorage.setItem "venues", JSON.stringify results
-							Backbone.history.navigate 'venues', true
-						else
-							#ideally direct to /venues and show no result message
-							alert 'no results were found try again'
-
-				#if no results	
-				else
-					alert "are you sure you have entered address correctly? please have a look and try again"
+			url = "venues?radius=#{radius}&reference=#{addressreference}"
+			Backbone.history.navigate url, true
 
 Template.venues.events
 	'click #display-view a': (e, t)->
@@ -242,8 +223,10 @@ Template.filterSearch.events
 		filtered = []
 		if hiretypeValue is "3"
 			filtered = _.filter Session.get("venues"), (num) -> num isnt null
+			alert(filtered.length)
 		else
 			filtered = _.where Session.get("venues"), hiretype: hiretypeValue
+			alert(filtered.length)
 		Session.set 'venues', filtered
 		sessionStorage.setItem "venues", JSON.stringify filtered
 

@@ -1,4 +1,5 @@
 <template name='venue'>
+	<button id="back-to" class="btn btn-mini btn-link" onclick="history.go(-1);">&laquo; Back</button>
 	{{#if document}}
 		<p>{{ document.name }}</p>
 		<p>{{ document.address.line1 }}</p>
